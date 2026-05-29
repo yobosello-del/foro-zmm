@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foro Ciudadano – ZMM 2022-2030</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --mg:#C8195A;--mg-dark:#9A1244;--mg-light:#F7E0EA;--mg-mid:#E8527F;
+  --gd:#2C2C2C;--gm:#666;--gl:#F4F4F4;--bd:#E0E0E0;--wh:#fff;
+}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F0F0F0;color:var(--gd);min-height:100vh}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+
+/* HEADER */
+.hdr{background:var(--gd);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:3px 3px 0 0}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.logo-bar{width:4px;height:38px;background:var(--mg);border-radius:2px;flex-shrink:0}
+.hdr-title{font-size:13px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.hdr-sub{font-size:10px;color:#bbb;text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.hdr-btns{display:flex;gap:6px;align-items:center}
+.hbtn{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 11px;font-size:11px;font-weight:600;cursor:pointer;border-radius:2px;text-transform:uppercase;letter-spacing:.3px}
+.hbtn:hover{background:var(--mg);border-color:var(--mg)}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;flex-shrink:0;box-shadow:0 0 0 2px rgba(76,175,80,.3)}
+.sync-dot.off{background:#999;box-shadow:none}
+
+/* TABS */
+.tabs{display:flex;background:#1a1a1a}
+.tab{flex:1;padding:10px 4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border:none;background:transparent;color:#777;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;text-align:center}
+.tab i{display:block;font-size:16px;margin-bottom:2px}
+.tab.active{color:#fff;border-bottom-color:var(--mg)}
+.tab:hover:not(.active){color:#ccc}
+
+/* CONTENT */
+.content{background:var(--wh);padding:18px;border-radius:0 0 3px 3px;border:1px solid var(--bd);border-top:none}
+.section{display:none}.section.active{display:block}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.stat{background:var(--gl);padding:10px 6px;text-align:center;border-top:3px solid var(--mg);border-radius:2px}
+.stat-num{font-size:22px;font-weight:700;color:var(--mg)}
+.stat-lbl{font-size:9px;color:var(--gm);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+/* CARD */
+.card{background:var(--wh);border:1px solid var(--bd);padding:14px 16px;margin-bottom:14px;border-radius:2px}
+.ctitle{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mg);border-bottom:1px solid var(--mg-light);padding-bottom:7px;margin-bottom:13px;display:flex;align-items:center;gap:7px}
+
+/* FORM */
+label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gm);display:block;margin-bottom:3px}
+input,select,textarea{width:100%;font-size:13px;padding:7px 10px;border:1px solid var(--bd);border-radius:2px;background:#fff;color:var(--gd);font-family:'Segoe UI',Arial,sans-serif}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--mg)}
+textarea{resize:vertical;min-height:68px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.mb{margin-bottom:10px}
+
+/* BUTTONS */
+.btn{padding:8px 16px;border-radius:2px;border:none;cursor:pointer;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;transition:all .15s}
+.btn-p{background:var(--mg);color:#fff}.btn-p:hover{background:var(--mg-dark)}
+.btn-o{background:#fff;color:var(--mg);border:1px solid var(--mg)}.btn-o:hover{background:var(--mg-light)}
+.btn-d{background:#fff;color:#999;border:1px solid var(--bd)}.btn-d:hover{color:var(--mg);border-color:var(--mg)}
+.btn-sm{padding:4px 9px;font-size:10px}
+.actions{display:flex;justify-content:flex-end;margin-top:12px;gap:8px}
+
+/* BADGES */
+.badge{display:inline-block;padding:2px 6px;font-size:9px;font-weight:700;border-radius:1px;text-transform:uppercase;letter-spacing:.3px}
+.b-mg{background:var(--mg-light);color:var(--mg)}.b-dk{background:var(--gd);color:#fff}
+.b-gn{background:#E2F0D9;color:#375623}.b-am{background:#FFF2CC;color:#7F6000}
+.b-gy{background:#F4F4F4;color:#555}.b-co{background:#FCE4EC;color:#880E4F}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:var(--gd)}
+th{text-align:left;padding:7px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff}
+td{padding:7px 8px;border-bottom:1px solid var(--bd);vertical-align:top}
+tbody tr:hover{background:var(--gl)}
+.empty{text-align:center;color:var(--gm);font-size:12px;padding:2rem;font-style:italic}
+
+/* MSG */
+.msg{padding:9px 13px;font-size:12px;margin-bottom:11px;border-radius:2px;font-weight:600}
+.msg-ok{background:#E2F0D9;color:#375623;border-left:3px solid #70AD47}
+.msg-err{background:#FCE4EC;color:#880E4F;border-left:3px solid var(--mg)}
+.msg-info{background:#E3F2FD;color:#1565C0;border-left:3px solid #1565C0}
+
+/* SEC HEADING */
+.sh{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--gd);border-bottom:2px solid var(--mg);padding-bottom:5px;margin-bottom:10px}
+
+/* RANKING */
+.rank-intro{font-size:11px;color:var(--gm);text-transform:uppercase;letter-spacing:.4px;font-weight:600;margin-bottom:14px;line-height:1.7;background:var(--gl);padding:10px 12px;border-left:3px solid var(--mg);border-radius:0 2px 2px 0}
+.rrow{display:grid;grid-template-columns:26px 1fr 170px;align-items:center;gap:10px;padding:7px 10px;border:1px solid var(--bd);margin-bottom:5px;background:#fff;border-radius:2px;transition:border-color .15s}
+.rrow:hover{border-color:var(--mg-mid)}
+.rrow.ranked{border-left:3px solid var(--mg);background:var(--mg-light)}
+.ridx{font-size:10px;font-weight:700;color:var(--gm);text-align:center}
+.rname{font-size:12px;font-weight:600;color:var(--gd);line-height:1.3}
+.rcustom{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--mg);letter-spacing:.4px}
+.rctrl{display:flex;align-items:center;gap:6px}
+.rbadge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.rb1{background:var(--mg);color:#fff}.rb2{background:var(--mg-mid);color:#fff}
+.rb3{background:#F4A0BE;color:#9A1244}.rbn{background:var(--gl);color:var(--gm)}
+.add-row{display:flex;gap:8px;align-items:flex-end;margin-top:8px;padding:10px;background:var(--gl);border-radius:2px;border:1px dashed var(--bd)}
+
+/* RESULTS */
+.res-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.res-pos{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;background:var(--mg-light);color:var(--mg)}
+.res-pos.top{background:var(--mg);color:#fff}
+.res-name{font-size:11px;font-weight:600;min-width:160px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.res-bar{flex:1;background:#eee;height:18px;border-radius:1px;overflow:hidden}
+.res-fill{height:100%;background:var(--mg);display:flex;align-items:center;padding-left:6px;transition:width .4s}
+.res-score{font-size:12px;font-weight:700;color:var(--mg);min-width:50px;text-align:right}
+
+/* PREGUNTAS */
+.qi{background:#fff;border:1px solid var(--bd);border-left:3px solid var(--mg);padding:10px 12px;margin-bottom:8px;border-radius:2px}
+.qi.done{border-left-color:#70AD47;opacity:.6}
+
+/* FOOTER */
+.ftr{background:#1a1a1a;padding:7px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 3px 3px;margin-top:-1px}
+.ftr-logo{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--mg);text-transform:uppercase}
+.ftr-time{font-size:10px;color:#666}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
+.spinner{width:36px;height:36px;border:3px solid var(--mg-light);border-top-color:var(--mg);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-txt{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mg)}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+</head>
+<body>
+
+<div id="loading-overlay" class="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-txt">Conectando con Firebase…</div>
+</div>
+
+<div class="wrap">
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="logo-bar"></div>
+      <div>
+        <div class="hdr-title">Foro de Consulta Ciudadana</div>
+        <div class="hdr-sub">Programa de Ordenamiento Territorial · ZMM 2022–2030</div>
+      </div>
+    </div>
+    <div class="hdr-btns">
+      <div id="sync-dot" class="sync-dot off" title="Estado de conexión"></div>
+      <button class="hbtn" onclick="exportCSV()"><i class="ti ti-download" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>CSV</button>
+      <button class="hbtn" onclick="exportJSON()"><i class="ti ti-file" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>JSON</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('dashboard',this)"><i class="ti ti-chart-bar"></i>Panel</button>
+    <button class="tab" onclick="showTab('registro',this)"><i class="ti ti-user-plus"></i>Registro</button>
+    <button class="tab" onclick="showTab('comentarios',this)"><i class="ti ti-message-circle"></i>Propuestas</button>
+    <button class="tab" onclick="showTab('votacion',this)"><i class="ti ti-list-numbers"></i>Prioridades</button>
+    <button class="tab" onclick="showTab('preguntas',this)"><i class="ti ti-help"></i>Preguntas</button>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="sec-dashboard" class="section active">
+      <div class="stats">
+        <div class="stat"><div class="stat-num" id="st-a">0</div><div class="stat-lbl">Asistentes</div></div>
+        <div class="stat"><div class="stat-num" id="st-p">0</div><div class="stat-lbl">Propuestas</div></div>
+        <div class="stat"><div class="stat-num" id="st-v">0</div><div class="stat-lbl">Calificaciones</div></div>
+        <div class="stat"><div class="stat-num" id="st-q">0</div><div class="stat-lbl">Preguntas</div></div>
+      </div>
+      <div class="sh">Asistencia por municipio</div>
+      <div id="chart-muni" style="margin-bottom:18px"><p class="empty">Sin datos aún</p></div>
+      <div class="sh">Últimas propuestas</div>
+      <div id="dash-ultimas"><p class="empty">Sin propuestas aún</p></div>
+    </div>
+
+    <!-- REGISTRO -->
+    <div id="sec-registro" class="section">
+      <div id="msg-reg"></div>
+      <div class="card">
+        <div class="ctitle"><i class="ti ti-id-badge"></i>Datos del participante</div>
+        <div class="g2">
+          <div class="mb"><label>Nombre completo *</label><input id="r-nombre" type="text" placeholder="Nombre y apellidos"></div>
+          <div class="mb"><label>Municipio *</label>
+            <select id="r-municipio"><option value="">— Seleccionar —</option><option>Morelia</option><option>Tarímbaro</option><option>Álvaro Obregón</option><option>Charo</option><option>Otro</option></select>
+          </div>
+        </div>
+        <div class="g3">
+          <div class="mb"><label>Sector *</label>
+            <select id="r-sector"><option value="">— Seleccionar —</option><option>Ciudadanía general</option><option>Academia</option><option>Sector privado</option><option>OSC / Organización civil</option><option>Gobierno</option><option>Medios</option></select>
+          </div>
+          <div class="mb"><label>Colonia / Comunidad</label><input id="r-colonia" placeholder="Opcional"></div>
+          <div class="mb"><label>Contacto</label><input id="r-contacto" placeholder="Tel. o correo"></div>
+        </div>
+        <div class="actions"><button class="btn btn-p" onclick="registrar()"><i class="ti ti-check" style="font-size:11px;vertical-align:-1px;margin-right:4px"></i>Registrar asistente</button></div>
+      </div>
+      <div class="sh">Asistentes registrados (<span id="cnt-reg">0</span>)</div>
+      <div style="margin-bottom:8px"><input id="buscar-reg" placeholder="Buscar por nombre o municipio…" style="max-width:280px" oninput="renderTablaReg()"></div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>#</th><th>Nombre</th><th>Municipio</th><th>Sector</th><th>Colonia</th><th></th></tr></thead>
+          <tbody id="tabla-reg"><tr><td colspan="6" class="empty">Sin registros</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- COMENTARIOS -->
+    <div id="sec-comentarios" class="section">
+      <div id="msg-com"></div>
+      <div class="card">
+        <div class="ctitle"><i class="ti ti-edit"></i>Nueva propuesta o comentario</div>
+        <div class="g2">
+          <div class="mb"><label>Participante</label><select id="c-part"><option value="">— Seleccionar —</option></select></div>
+          <div class="mb"><label>Tema</label>
+            <select id="c-tema"><option value="">— Tema —</option><option>Seguridad</option><option>Vialidades y transporte</option><option>Servicios públicos</option><option>Medio ambiente e hídrico</option><option>Uso de suelo</option><option>Crecimiento urbano</option><option>Proyectos estratégicos</option><option>Otro</option></select>
+          </div>
+        </div>
+        <div class="mb"><label>Propuesta / Comentario *</label><textarea id="c-texto" placeholder="Captura aquí la propuesta o comentario…"></textarea></div>
+        <div class="g2">
+          <div class="mb"><label>Municipio de referencia</label>
+            <select id="c-muni"><option value="">— Opcional —</option><option>Morelia</option><option>Tarímbaro</option><option>Álvaro Obregón</option><option>Charo</option><option>Zona metropolitana</option></select>
+          </div>
+          <div class="mb"><label>Tipo</label>
+            <select id="c-tipo"><option>Propuesta</option><option>Comentario</option><option>Denuncia ciudadana</option><option>Pregunta al panel</option></select>
+          </div>
+        </div>
+        <div class="actions"><button class="btn btn-p" onclick="agregarCom()"><i class="ti ti-plus" style="font-size:11px;vertical-align:-1px;margin-right:4px"></i>Agregar</button></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div class="sh" style="margin:0">Propuestas (<span id="cnt-com">0</span>)</div>
+        <select id="filtro-tema" onchange="renderTablaCom()" style="font-size:11px;padding:4px 8px"><option value="">Todos los temas</option><option>Seguridad</option><option>Vialidades y transporte</option><option>Servicios públicos</option><option>Medio ambiente e hídrico</option><option>Uso de suelo</option><option>Crecimiento urbano</option><option>Proyectos estratégicos</option><option>Otro</option></select>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>#</th><th>Participante</th><th>Tema</th><th>Tipo</th><th>Propuesta / Comentario</th><th></th></tr></thead>
+          <tbody id="tabla-com"><tr><td colspan="6" class="empty">Sin comentarios</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VOTACION -->
+    <div id="sec-votacion" class="section">
+      <div id="msg-vot"></div>
+      <div class="card">
+        <div class="ctitle"><i class="ti ti-list-numbers"></i>Calificar proyectos por importancia</div>
+        <div class="rank-intro">
+          Asigna un grado del <strong style="color:var(--mg)">1 (más importante)</strong> al <strong style="color:var(--mg)"><span id="rank-max">8</span> (menos importante)</strong> a cada proyecto. Cada número solo puede usarse una vez. Si el participante propone uno adicional, agrégalo primero.
+        </div>
+        <div class="mb" style="margin-top:10px"><label>Participante que califica</label><select id="v-part"><option value="">— Seleccionar —</option></select></div>
+        <div class="add-row">
+          <div style="flex:1"><label>Agregar proyecto ciudadano</label><input id="new-proj" placeholder="Nombre del proyecto propuesto…"></div>
+          <button class="btn btn-o btn-sm" style="white-space:nowrap;flex-shrink:0" onclick="addCustomProj()"><i class="ti ti-plus" style="font-size:11px;vertical-align:-1px;margin-right:3px"></i>Agregar</button>
+        </div>
+        <div style="margin:14px 0 6px">
+          <div style="display:grid;grid-template-columns:26px 1fr 170px;gap:10px;padding:0 10px 6px;border-bottom:2px solid var(--mg)">
+            <span style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--gm)">#</span>
+            <span style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--gm)">Proyecto</span>
+            <span style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--gm)">Grado de importancia</span>
+          </div>
+        </div>
+        <div id="rank-list"></div>
+        <div class="actions">
+          <button class="btn btn-o btn-sm" onclick="resetRank()"><i class="ti ti-rotate-clockwise" style="font-size:11px;vertical-align:-1px;margin-right:3px"></i>Limpiar</button>
+          <button class="btn btn-p" onclick="submitRank()"><i class="ti ti-send" style="font-size:11px;vertical-align:-1px;margin-right:4px"></i>Registrar calificación</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div class="sh" style="margin:0">Resultados acumulados (<span id="cnt-vot">0</span> participantes)</div>
+        <span style="font-size:9px;color:var(--gm);text-transform:uppercase;letter-spacing:.3px">Menor puntaje = más prioritario</span>
+      </div>
+      <div id="vote-results"><p class="empty">Sin calificaciones aún</p></div>
+      <div style="margin-top:14px">
+        <div class="sh">Detalle por participante</div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Participante</th><th>Hora</th><th>Proyectos calificados</th></tr></thead>
+            <tbody id="tabla-votos"><tr><td colspan="3" class="empty">Sin registros</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREGUNTAS -->
+    <div id="sec-preguntas" class="section">
+      <div id="msg-preg"></div>
+      <div class="card">
+        <div class="ctitle"><i class="ti ti-help-circle"></i>Pregunta al panel</div>
+        <div class="g2">
+          <div class="mb"><label>Participante</label><select id="p-part"><option value="">— Seleccionar —</option></select></div>
+          <div class="mb"><label>Dirigida a</label>
+            <select id="p-dest"><option>Mesa técnica</option><option>Autoridades municipales</option><option>Coordinador del programa</option><option>Panel general</option></select>
+          </div>
+        </div>
+        <div class="mb"><label>Pregunta *</label><textarea id="p-texto" placeholder="Escribe la pregunta…"></textarea></div>
+        <div class="actions"><button class="btn btn-p" onclick="agregarPreg()"><i class="ti ti-send" style="font-size:11px;vertical-align:-1px;margin-right:4px"></i>Enviar al panel</button></div>
+      </div>
+      <div class="sh">Cola de preguntas (<span id="cnt-preg">0</span>)</div>
+      <div id="lista-pregs"><p class="empty">Sin preguntas registradas</p></div>
+    </div>
+
+  </div><!-- /content -->
+
+  <div class="ftr">
+    <div class="ftr-logo">MEJORAR · ZMM</div>
+    <div class="ftr-time" id="ftr-time"></div>
+    <div style="display:flex;gap:4px">
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--mg)"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--mg);opacity:.4"></div>
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--mg);opacity:.4"></div>
+    </div>
+  </div>
+</div><!-- /wrap -->
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDePSLHofrDBgAT-ttQh5xDmTHCiEHcLLw",
+  authDomain: "potzmm.firebaseapp.com",
+  projectId: "potzmm",
+  storageBucket: "potzmm.firebasestorage.app",
+  messagingSenderId: "318145217017",
+  appId: "1:318145217017:web:63f542899c1cc252573d28",
+  measurementId: "G-4GCPWECELV"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ── Estado local (sincronizado desde Firestore) ──
+let asistentes=[], comentarios=[], rankingVotos=[], preguntas=[];
+
+const BASE_PROYECTOS=[
+  'Identidad y City Branding Metropolitano',
+  'Ecosistema Digital Ciudadano',
+  'Gestión de riesgos y vulnerabilidad',
+  'Protección de mantos acuíferos',
+  'Movilidad metropolitana integrada',
+  'Regularización de asentamientos',
+  'Infraestructura verde y ANP',
+  'Gobernanza metropolitana'
+];
+let proyectos=[...BASE_PROYECTOS];
+let customProjects=[];
+
+// ── Conexión visual ──
+function setSynced(ok){
+  const d=document.getElementById('sync-dot');
+  d.className='sync-dot'+(ok?'':' off');
+  d.title=ok?'Conectado a Firebase':'Sin conexión';
+}
+
+// ── Reloj ──
+setInterval(()=>{
+  document.getElementById('ftr-time').textContent=
+    new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+},1000);
+
+// ── Navegación ──
+window.showTab=function(t,el){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sec-'+t).classList.add('active');
+  if(t==='dashboard')renderDash();
+  if(t==='votacion'){syncParts('v-part');renderRankList();renderVoteResults();renderTablaVotos();}
+  if(t==='comentarios')syncParts('c-part');
+  if(t==='preguntas')syncParts('p-part');
+};
+
+function showMsg(id,txt,type){
+  const el=document.getElementById(id);
+  el.innerHTML=`<div class="msg msg-${type}">${txt}</div>`;
+  setTimeout(()=>el.innerHTML='',4000);
+}
+
+// ── LISTENERS TIEMPO REAL ──
+onSnapshot(query(collection(db,'asistentes'),orderBy('ts')), snap=>{
+  asistentes=snap.docs.map(d=>({...d.data(),_id:d.id}));
+  renderTablaReg(); renderDash(); updateStats(); syncParts('c-part'); syncParts('p-part'); syncParts('v-part');
+  setSynced(true);
+  document.getElementById('loading-overlay').style.display='none';
+}, ()=>setSynced(false));
+
+onSnapshot(query(collection(db,'comentarios'),orderBy('ts')), snap=>{
+  comentarios=snap.docs.map(d=>({...d.data(),_id:d.id}));
+  renderTablaCom(); renderDash(); updateStats();
+});
+
+onSnapshot(query(collection(db,'rankingVotos'),orderBy('ts')), snap=>{
+  rankingVotos=snap.docs.map(d=>({...d.data(),_id:d.id}));
+  renderVoteResults(); renderTablaVotos(); updateStats();
+});
+
+onSnapshot(query(collection(db,'preguntas'),orderBy('ts')), snap=>{
+  preguntas=snap.docs.map(d=>({...d.data(),_id:d.id}));
+  renderPregs(); updateStats();
+});
+
+// ── REGISTRO ──
+window.registrar=async function(){
+  const nombre=document.getElementById('r-nombre').value.trim();
+  const municipio=document.getElementById('r-municipio').value;
+  const sector=document.getElementById('r-sector').value;
+  if(!nombre||!municipio||!sector){showMsg('msg-reg','Completa los campos obligatorios (*)','err');return;}
+  try{
+    await addDoc(collection(db,'asistentes'),{
+      nombre,municipio,sector,
+      colonia:document.getElementById('r-colonia').value.trim(),
+      contacto:document.getElementById('r-contacto').value.trim(),
+      hora:new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}),
+      ts:serverTimestamp()
+    });
+    ['r-nombre','r-colonia','r-contacto'].forEach(i=>document.getElementById(i).value='');
+    ['r-municipio','r-sector'].forEach(i=>document.getElementById(i).value='');
+    showMsg('msg-reg','Asistente registrado y guardado en la nube ✓','ok');
+  }catch(e){showMsg('msg-reg','Error al guardar: '+e.message,'err');}
+};
+
+window.delAsist=async function(id){
+  if(!confirm('¿Eliminar este registro?'))return;
+  await deleteDoc(doc(db,'asistentes',id));
+};
+
+function renderTablaReg(){
+  const q=(document.getElementById('buscar-reg').value||'').toLowerCase();
+  const fil=asistentes.filter(a=>a.nombre.toLowerCase().includes(q)||a.municipio.toLowerCase().includes(q));
+  document.getElementById('cnt-reg').textContent=asistentes.length;
+  const tb=document.getElementById('tabla-reg');
+  if(!fil.length){tb.innerHTML='<tr><td colspan="6" class="empty">Sin registros</td></tr>';return;}
+  tb.innerHTML=fil.map((a,i)=>`<tr>
+    <td style="font-weight:700;color:var(--mg)">${i+1}</td>
+    <td><strong>${a.nombre}</strong><br><span style="font-size:10px;color:var(--gm)">${a.hora||''}</span></td>
+    <td>${a.municipio}</td><td><span class="badge b-dk">${a.sector}</span></td>
+    <td style="font-size:11px">${a.colonia||'—'}</td>
+    <td><button class="btn btn-d btn-sm" onclick="delAsist('${a._id}')"><i class="ti ti-trash"></i></button></td>
+  </tr>`).join('');
+}
+document.getElementById('buscar-reg').addEventListener('input',renderTablaReg);
+
+function syncParts(selId){
+  const sel=document.getElementById(selId);
+  if(!sel)return;
+  const val=sel.value;
+  sel.innerHTML='<option value="">— Seleccionar —</option>';
+  asistentes.forEach(a=>{const o=document.createElement('option');o.value=a.nombre;o.textContent=a.nombre+' ('+a.municipio+')';sel.appendChild(o);});
+  const o2=document.createElement('option');o2.value='Público general';o2.textContent='Público general';sel.appendChild(o2);
+  if(val)sel.value=val;
+}
+
+// ── COMENTARIOS ──
+window.agregarCom=async function(){
+  const texto=document.getElementById('c-texto').value.trim();
+  if(!texto){showMsg('msg-com','Escribe el texto de la propuesta','err');return;}
+  try{
+    await addDoc(collection(db,'comentarios'),{
+      participante:document.getElementById('c-part').value||'Anónimo',
+      tema:document.getElementById('c-tema').value||'Sin tema',
+      municipio:document.getElementById('c-muni').value||'—',
+      tipo:document.getElementById('c-tipo').value,
+      texto,hora:new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}),
+      ts:serverTimestamp()
+    });
+    document.getElementById('c-texto').value='';
+    showMsg('msg-com','Propuesta guardada en la nube ✓','ok');
+  }catch(e){showMsg('msg-com','Error: '+e.message,'err');}
+};
+
+window.delCom=async function(id){
+  if(!confirm('¿Eliminar?'))return;
+  await deleteDoc(doc(db,'comentarios',id));
+};
+
+function renderTablaCom(){
+  const ft=document.getElementById('filtro-tema').value;
+  const fil=ft?comentarios.filter(c=>c.tema===ft):comentarios;
+  document.getElementById('cnt-com').textContent=comentarios.length;
+  const tb=document.getElementById('tabla-com');
+  if(!fil.length){tb.innerHTML='<tr><td colspan="6" class="empty">Sin comentarios</td></tr>';return;}
+  const bc={'Propuesta':'b-gn','Comentario':'b-mg','Denuncia ciudadana':'b-co','Pregunta al panel':'b-am'};
+  tb.innerHTML=fil.map((c,i)=>`<tr>
+    <td style="font-weight:700;color:var(--mg)">${i+1}</td>
+    <td style="font-size:11px">${c.participante}<br><span style="color:var(--gm)">${c.hora||''}</span></td>
+    <td><span class="badge b-gy">${c.tema}</span></td>
+    <td><span class="badge ${bc[c.tipo]||'b-gy'}">${c.tipo}</span></td>
+    <td style="font-size:11px;max-width:200px">${c.texto}</td>
+    <td><button class="btn btn-d btn-sm" onclick="delCom('${c._id}')"><i class="ti ti-trash"></i></button></td>
+  </tr>`).join('');
+}
+
+// ── RANKING ──
+window.addCustomProj=function(){
+  const inp=document.getElementById('new-proj');
+  const n=inp.value.trim();
+  if(!n){showMsg('msg-vot','Escribe el nombre del proyecto','err');return;}
+  if(proyectos.includes(n)){showMsg('msg-vot','Este proyecto ya existe','err');return;}
+  proyectos.push(n);customProjects.push(n);
+  inp.value='';renderRankList();
+  document.getElementById('rank-max').textContent=proyectos.length;
+  showMsg('msg-vot','Proyecto agregado ✓','ok');
+};
+
+function renderRankList(){
+  document.getElementById('rank-max').textContent=proyectos.length;
+  const n=proyectos.length;
+  const opts=Array.from({length:n},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('');
+  document.getElementById('rank-list').innerHTML=proyectos.map((p,i)=>{
+    const isCust=customProjects.includes(p);
+    return`<div class="rrow" id="rrow-${i}">
+      <span class="ridx">${i+1}</span>
+      <div><div class="rname">${p}</div>${isCust?'<div class="rcustom">★ Proyecto ciudadano</div>':''}</div>
+      <div class="rctrl">
+        <div class="rbadge rbn" id="rb-${i}">—</div>
+        <select style="flex:1;font-size:12px;padding:5px 7px;border:1px solid var(--bd);border-radius:2px" id="rs-${i}" onchange="onRankCh(${i})">
+          <option value="">— Grado —</option>${opts}
+        </select>
+        ${isCust?`<button class="btn btn-d btn-sm" onclick="removeProj(${i})" style="padding:4px 6px"><i class="ti ti-x"></i></button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.onRankCh=function(idx){
+  const nv=document.getElementById('rs-'+idx).value;
+  if(!nv)return;
+  for(let i=0;i<proyectos.length;i++){
+    if(i===idx)continue;
+    const s=document.getElementById('rs-'+i);
+    if(s&&s.value===nv){s.value='';updateBadge(i,'');}
+  }
+  updateBadge(idx,nv);
+};
+
+function updateBadge(idx,val){
+  const b=document.getElementById('rb-'+idx);
+  const r=document.getElementById('rrow-'+idx);
+  if(!b)return;
+  if(!val){b.textContent='—';b.className='rbadge rbn';r.classList.remove('ranked');return;}
+  b.textContent=val;r.classList.add('ranked');
+  b.className='rbadge '+(val==='1'?'rb1':val==='2'?'rb2':val==='3'?'rb3':'rbn');
+}
+
+window.removeProj=function(idx){
+  const n=proyectos[idx];
+  proyectos.splice(idx,1);customProjects=customProjects.filter(p=>p!==n);
+  renderRankList();document.getElementById('rank-max').textContent=proyectos.length;
+};
+
+window.resetRank=function(){
+  proyectos.forEach((_,i)=>{const s=document.getElementById('rs-'+i);if(s)s.value='';updateBadge(i,'');});
+};
+
+window.submitRank=async function(){
+  const participante=document.getElementById('v-part').value||'Anónimo';
+  const cal={};let sin=0;
+  proyectos.forEach((p,i)=>{
+    const v=document.getElementById('rs-'+i)?.value;
+    if(v)cal[p]=parseInt(v);else sin++;
+  });
+  if(sin===proyectos.length){showMsg('msg-vot','Asigna al menos un grado','err');return;}
+  try{
+    await addDoc(collection(db,'rankingVotos'),{
+      participante,calificaciones:cal,
+      hora:new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}),
+      ts:serverTimestamp()
+    });
+    showMsg('msg-vot',`Calificación de ${participante} guardada en la nube ✓ (${proyectos.length-sin} de ${proyectos.length} proyectos)`,'ok');
+    resetRank();document.getElementById('v-part').value='';
+  }catch(e){showMsg('msg-vot','Error: '+e.message,'err');}
+};
+
+function calcScores(){
+  const sc={},ct={};
+  rankingVotos.forEach(v=>{
+    Object.entries(v.calificaciones||{}).forEach(([p,g])=>{
+      sc[p]=(sc[p]||0)+g;ct[p]=(ct[p]||0)+1;
+    });
+  });
+  return{sc,ct};
+}
+
+function renderVoteResults(){
+  document.getElementById('cnt-vot').textContent=rankingVotos.length;
+  const el=document.getElementById('vote-results');
+  if(!rankingVotos.length){el.innerHTML='<p class="empty">Sin calificaciones aún</p>';return;}
+  const{sc,ct}=calcScores();
+  const allP=Object.keys(sc);
+  if(!allP.length){el.innerHTML='<p class="empty">Sin calificaciones aún</p>';return;}
+  const sorted=allP.sort((a,b)=>sc[a]-sc[b]);
+  const maxSc=Math.max(...sorted.map(p=>sc[p]))||1;
+  el.innerHTML=sorted.map((p,i)=>{
+    const pct=Math.round(sc[p]/maxSc*100);
+    const avg=ct[p]?Math.round(sc[p]/ct[p]*10)/10:'—';
+    return`<div class="res-row">
+      <div class="res-pos ${i<3?'top':''}">${i+1}</div>
+      <div class="res-name" title="${p}">${p}</div>
+      <div class="res-bar"><div class="res-fill" style="width:${100-pct+15}%"><span style="font-size:10px;color:#fff;font-weight:700;white-space:nowrap">${ct[p]} resp.</span></div></div>
+      <div class="res-score"><span style="font-size:11px">${sc[p]}pts</span><br><span style="font-size:9px;color:var(--gm)">prom ${avg}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderTablaVotos(){
+  const tb=document.getElementById('tabla-votos');
+  if(!rankingVotos.length){tb.innerHTML='<tr><td colspan="3" class="empty">Sin registros</td></tr>';return;}
+  tb.innerHTML=rankingVotos.map(v=>{
+    const det=Object.entries(v.calificaciones||{}).sort((a,b)=>a[1]-b[1])
+      .map(([p,g])=>`<span class="badge b-gy" style="margin:1px">${g}° ${p}</span>`).join(' ');
+    return`<tr><td><strong>${v.participante}</strong></td><td style="font-size:11px;white-space:nowrap">${v.hora||''}</td><td style="font-size:11px">${det}</td></tr>`;
+  }).join('');
+}
+
+// ── PREGUNTAS ──
+window.agregarPreg=async function(){
+  const texto=document.getElementById('p-texto').value.trim();
+  if(!texto){showMsg('msg-preg','Escribe la pregunta','err');return;}
+  try{
+    await addDoc(collection(db,'preguntas'),{
+      participante:document.getElementById('p-part').value||'Público general',
+      destino:document.getElementById('p-dest').value,
+      texto,respondida:false,
+      hora:new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}),
+      ts:serverTimestamp()
+    });
+    document.getElementById('p-texto').value='';
+    showMsg('msg-preg','Pregunta enviada al panel y guardada ✓','ok');
+  }catch(e){showMsg('msg-preg','Error: '+e.message,'err');}
+};
+
+window.toggleResp=async function(id,actual){
+  await updateDoc(doc(db,'preguntas',id),{respondida:!actual});
+};
+
+window.delPreg=async function(id){
+  if(!confirm('¿Eliminar esta pregunta?'))return;
+  await deleteDoc(doc(db,'preguntas',id));
+};
+
+function renderPregs(){
+  document.getElementById('cnt-preg').textContent=preguntas.length;
+  const lp=document.getElementById('lista-pregs');
+  if(!preguntas.length){lp.innerHTML='<p class="empty">Sin preguntas registradas</p>';return;}
+  lp.innerHTML=preguntas.map(p=>`<div class="qi ${p.respondida?'done':''}">
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div style="flex:1">
+        <div style="font-size:12px;margin-bottom:5px;line-height:1.5">${p.texto}</div>
+        <div style="font-size:10px;color:var(--gm);text-transform:uppercase;letter-spacing:.3px">${p.participante} · ${p.destino} · ${p.hora||''}${p.respondida?' · <span style="color:#375623">✓ Respondida</span>':''}</div>
+      </div>
+      <div style="display:flex;gap:5px;flex-shrink:0">
+        <button class="btn btn-o btn-sm" onclick="toggleResp('${p._id}',${p.respondida})" style="font-size:10px">${p.respondida?'Reabrir':'Respondida'}</button>
+        <button class="btn btn-d btn-sm" onclick="delPreg('${p._id}')"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+// ── DASHBOARD ──
+function updateStats(){
+  document.getElementById('st-a').textContent=asistentes.length;
+  document.getElementById('st-p').textContent=comentarios.length;
+  document.getElementById('st-v').textContent=rankingVotos.length;
+  document.getElementById('st-q').textContent=preguntas.length;
+}
+
+function renderDash(){
+  updateStats();
+  const munis={};
+  asistentes.forEach(a=>munis[a.municipio]=(munis[a.municipio]||0)+1);
+  const cm=document.getElementById('chart-muni');
+  if(!Object.keys(munis).length){cm.innerHTML='<p class="empty">Sin datos de asistencia aún</p>';return;}
+  const max=Math.max(...Object.values(munis));
+  cm.innerHTML=Object.entries(munis).sort((a,b)=>b[1]-a[1]).map(([m,n])=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--gm);min-width:110px;text-align:right">${m}</span>
+      <div style="flex:1;background:#eee;height:18px;border-radius:1px;overflow:hidden">
+        <div style="width:${Math.round(n/max*100)}%;background:var(--mg);height:100%;display:flex;align-items:center;padding-left:6px">
+          <span style="font-size:10px;color:#fff;font-weight:700">${n}</span>
+        </div>
+      </div>
+    </div>`).join('');
+  const ul=document.getElementById('dash-ultimas');
+  const ult=[...comentarios].reverse().slice(0,5);
+  if(!ult.length){ul.innerHTML='<p class="empty">Sin propuestas aún</p>';return;}
+  const bc={'Propuesta':'b-gn','Comentario':'b-mg','Denuncia ciudadana':'b-co','Pregunta al panel':'b-am'};
+  ul.innerHTML=ult.map(c=>`<div style="padding:8px 0;border-bottom:1px solid var(--bd);display:flex;gap:8px;align-items:flex-start">
+    <div style="width:3px;background:var(--mg);align-self:stretch;flex-shrink:0;border-radius:1px"></div>
+    <div style="flex:1">
+      <div style="display:flex;gap:5px;margin-bottom:3px">
+        <span class="badge ${bc[c.tipo]||'b-gy'}">${c.tipo}</span>
+        <span class="badge b-gy">${c.tema}</span>
+        <span style="font-size:10px;color:var(--gm);margin-left:auto">${c.hora||''}</span>
+      </div>
+      <div style="font-size:12px">${c.texto.length>130?c.texto.slice(0,130)+'…':c.texto}</div>
+      <div style="font-size:10px;color:var(--gm);text-transform:uppercase;margin-top:2px">${c.participante}</div>
+    </div>
+  </div>`).join('');
+}
+
+// ── EXPORT ──
+window.exportCSV=function(){
+  if(!asistentes.length&&!comentarios.length&&!rankingVotos.length&&!preguntas.length){alert('No hay datos para exportar.');return;}
+  let csv='ASISTENTES\nNombre,Municipio,Sector,Colonia,Contacto,Hora\n';
+  asistentes.forEach(a=>csv+=`"${a.nombre}","${a.municipio}","${a.sector}","${a.colonia||''}","${a.contacto||''}","${a.hora||''}"\n`);
+  csv+='\nPROPUESTAS\nParticipante,Tema,Tipo,Municipio,Texto,Hora\n';
+  comentarios.forEach(c=>csv+=`"${c.participante}","${c.tema}","${c.tipo}","${c.municipio}","${c.texto.replace(/"/g,'""')}","${c.hora||''}"\n`);
+  const allP=[...new Set(rankingVotos.flatMap(v=>Object.keys(v.calificaciones||{})))];
+  if(allP.length){
+    csv+='\nCALIFICACIONES\nParticipante,Hora';
+    allP.forEach(p=>csv+=`,"${p}"`);csv+='\n';
+    rankingVotos.forEach(v=>{csv+=`"${v.participante}","${v.hora||''}"`;allP.forEach(p=>csv+=`,${(v.calificaciones||{})[p]||''}`);csv+='\n';});
+    const{sc,ct}=calcScores();
+    csv+='\nRESULTADOS ACUMULADOS\nProyecto,Puntaje,Respuestas,Promedio\n';
+    Object.keys(sc).sort((a,b)=>sc[a]-sc[b]).forEach(p=>csv+=`"${p}",${sc[p]},${ct[p]},${ct[p]?Math.round(sc[p]/ct[p]*10)/10:0}\n`);
+  }
+  csv+='\nPREGUNTAS AL PANEL\nParticipante,Pregunta,Dirigida a,Estado,Hora\n';
+  preguntas.forEach(p=>csv+=`"${p.participante}","${p.texto.replace(/"/g,'""')}","${p.destino}","${p.respondida?'Respondida':'Pendiente'}","${p.hora||''}"\n`);
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='foro_zmm_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+};
+
+window.exportJSON=function(){
+  const{sc,ct}=calcScores();
+  const data={fecha:new Date().toISOString(),asistentes,comentarios,
+    ranking:{votos:rankingVotos,resultados:Object.keys(sc).sort((a,b)=>sc[a]-sc[b]).map(p=>({proyecto:p,puntaje:sc[p],respuestas:ct[p],promedio:ct[p]?Math.round(sc[p]/ct[p]*10)/10:null}))},
+    preguntas};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='foro_zmm_'+new Date().toISOString().slice(0,10)+'.json';a.click();
+};
+
+// ── Init ──
+renderRankList();
+
+</script>
+</body>
+</html>
